@@ -3,11 +3,15 @@
 
 :root {
   --grid-size: 35px;
-  --bg-color: #0a0a0a; /* Dark background */
-  --grid-color: rgba(255, 255, 255, 0.1); /* White transparent grids */
-  --accent-color: #FF2D2D; /* Reddish highlight */
+  --bg-color: #0a0a0a;
+  /* Dark background */
+  --grid-color: rgba(255, 255, 255, 0.1);
+  /* White transparent grids */
+  --accent-color: #FF3333;
+  /* Reddish highlight */
   --text-light: #e0e0e0;
-  --text-dark: #0a0a0a; /* For text inside the accent box */
+  --text-dark: #0a0a0a;
+  /* For text inside the accent box */
   --nav-bg: #1a1a1a;
 }
 
@@ -30,7 +34,7 @@ body {
   min-height: 100vh;
   position: relative;
   background-size: var(--grid-size) var(--grid-size);
-  background-image: 
+  background-image:
     linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
 }
@@ -42,44 +46,55 @@ body {
   left: 0;
   background-color: var(--accent-color);
   pointer-events: none;
-  z-index: 9999;
+  z-index: 1;
   /* Add smooth transform transition and opacity fade */
-  transition: opacity 0.45s ease-out, transform 0.05s linear; 
-  
+  transition: opacity 0.45s ease-out, transform 0.05s linear;
+
   --s: var(--grid-size);
   --s2: calc(var(--grid-size) * 2);
   --ns: calc(var(--grid-size) * -1);
   --ns2: calc(var(--grid-size) * -2);
-  
+
+  --trail-r: 255;
+  --trail-g: 45;
+  --trail-b: 45;
+  background-color: rgba(var(--trail-r), var(--trail-g), var(--trail-b), 1);
+
   /* Surrounding layers of fading red to form a 21-cell rounded cross */
-  box-shadow: 
+  box-shadow:
     /* Distance 1 (adjacent) - opacity 0.8 */
-    0 var(--ns) 0 0 rgba(255, 45, 45, 0.8),
-    0 var(--s) 0 0 rgba(255, 45, 45, 0.8),
-    var(--s) 0 0 0 rgba(255, 45, 45, 0.8),
-    var(--ns) 0 0 0 rgba(255, 45, 45, 0.8),
-    
+    0 var(--ns) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.8),
+    0 var(--s) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.8),
+    var(--s) 0 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.8),
+    var(--ns) 0 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.8),
+
     /* Distance 1.4 (inner corners) - opacity 0.5 */
-    var(--s) var(--ns) 0 0 rgba(255, 45, 45, 0.5),
-    var(--ns) var(--ns) 0 0 rgba(255, 45, 45, 0.5),
-    var(--s) var(--s) 0 0 rgba(255, 45, 45, 0.5),
-    var(--ns) var(--s) 0 0 rgba(255, 45, 45, 0.5),
-    
+    var(--s) var(--ns) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.5),
+    var(--ns) var(--ns) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.5),
+    var(--s) var(--s) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.5),
+    var(--ns) var(--s) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.5),
+
     /* Distance 2 (outer straight) - opacity 0.5 */
-    0 var(--ns2) 0 0 rgba(255, 45, 45, 0.5),
-    0 var(--s2) 0 0 rgba(255, 45, 45, 0.5),
-    var(--s2) 0 0 0 rgba(255, 45, 45, 0.5),
-    var(--ns2) 0 0 0 rgba(255, 45, 45, 0.5),
-    
+    0 var(--ns2) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.5),
+    0 var(--s2) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.5),
+    var(--s2) 0 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.5),
+    var(--ns2) 0 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.5),
+
     /* Distance 2.2 (outer corners of the cross) - opacity 0.2 */
-    var(--s) var(--ns2) 0 0 rgba(255, 45, 45, 0.2),
-    var(--ns) var(--ns2) 0 0 rgba(255, 45, 45, 0.2),
-    var(--s) var(--s2) 0 0 rgba(255, 45, 45, 0.2),
-    var(--ns) var(--s2) 0 0 rgba(255, 45, 45, 0.2),
-    var(--s2) var(--s) 0 0 rgba(255, 45, 45, 0.2),
-    var(--s2) var(--ns) 0 0 rgba(255, 45, 45, 0.2),
-    var(--ns2) var(--s) 0 0 rgba(255, 45, 45, 0.2),
-    var(--ns2) var(--ns) 0 0 rgba(255, 45, 45, 0.2);
+    var(--s) var(--ns2) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.2),
+    var(--ns) var(--ns2) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.2),
+    var(--s) var(--s2) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.2),
+    var(--ns) var(--s2) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.2),
+    var(--s2) var(--s) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.2),
+    var(--s2) var(--ns) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.2),
+    var(--ns2) var(--s) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.2),
+    var(--ns2) var(--ns) 0 0 rgba(var(--trail-r), var(--trail-g), var(--trail-b), 0.2);
+}
+
+.cursor-trail-white {
+  --trail-r: 255;
+  --trail-g: 255;
+  --trail-b: 255;
 }
 
 .top-nav {
@@ -102,7 +117,8 @@ body {
   z-index: 10;
   display: flex;
   flex-direction: row;
-  height: calc(100vh - 45px); /* full viewport minus nav */
+  height: calc(100vh - 45px);
+  /* full viewport minus nav */
   overflow: hidden;
 }
 
@@ -165,7 +181,8 @@ body {
 .accent-box {
   background-color: var(--accent-color);
   padding: 40px;
-  width: 100%;           /* fill left column width */
+  width: 100%;
+  /* fill left column width */
   box-sizing: border-box;
   position: relative;
   z-index: 5;
@@ -224,5 +241,5 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 100;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
