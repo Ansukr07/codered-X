@@ -11,7 +11,7 @@ const TimelineSection = () => {
       
       <div className="timeline-right">
         <h2 className="timeline-heading">
-          <span className="highlight-italic">Here's</span> What's Coming!
+          <span className="highlight-italic">Coming</span> Your Way
         </h2>
         
         <div className="timeline-scroll-area">

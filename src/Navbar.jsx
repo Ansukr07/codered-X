@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Navbar.css';
+import logoImage from './assets/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,14 +13,7 @@ const Navbar = () => {
     <div className={`custom-navbar ${isOpen ? 'open' : ''}`}>
       <div className="navbar-header">
         <div className="nav-logo">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="5" height="5" fill="white" />
-            <rect x="2" y="9" width="5" height="5" fill="white" />
-            <rect x="2" y="16" width="5" height="5" fill="white" />
-            <rect x="9" y="16" width="5" height="5" fill="white" />
-            <rect x="16" y="16" width="5" height="5" fill="white" />
-            <rect x="16" y="9" width="5" height="5" fill="white" />
-          </svg>
+          <img src={logoImage} alt="CODERED Logo" className="nav-logo-img" />
         </div>
         
         <div className="nav-title">CODERED 4.0</div>
