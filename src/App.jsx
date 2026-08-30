@@ -36,17 +36,23 @@ function App() {
     lastMousePos.current = { x: e.clientX, y: e.clientY };
     const snappedX = Math.floor(e.pageX / gridSize) * gridSize;
     const snappedY = Math.floor(e.pageY / gridSize) * gridSize;
-    addTrailPoint(snappedX, snappedY);
+    
+    // Add a delay so the trail lags behind fast mouse movements
+    setTimeout(() => {
+      addTrailPoint(snappedX, snappedY);
+    }, 120);
   };
 
   useEffect(() => {
     const handleScroll = () => {
       const pageX = lastMousePos.current.x + window.scrollX;
       const pageY = lastMousePos.current.y + window.scrollY;
-      addTrailPoint(
-        Math.floor(pageX / gridSize) * gridSize,
-        Math.floor(pageY / gridSize) * gridSize
-      );
+      setTimeout(() => {
+        addTrailPoint(
+          Math.floor(pageX / gridSize) * gridSize,
+          Math.floor(pageY / gridSize) * gridSize
+        );
+      }, 120);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -64,7 +70,7 @@ function App() {
             transform: `translate(${point.x}px, ${point.y}px)`,
             width: gridSize,
             height: gridSize,
-            opacity: index === trail.length - 1 ? 0.8 : (index / trail.length) * 0.45,
+            opacity: index === trail.length - 1 ? 0.4 : (index / trail.length) * 0.25,
           }}
         />
       ))}
