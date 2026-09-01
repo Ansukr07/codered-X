@@ -5,23 +5,20 @@ const CornerCluster = () => {
   const containerRef = useRef(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const gridSize = 35;
+  const radius = 12; // 12 boxes = 420px radius
 
   useEffect(() => {
     const updateAlignment = () => {
       if (containerRef.current) {
-        // Find the absolute position of the bottom-left corner of the container
         const rect = containerRef.current.getBoundingClientRect();
-        const absoluteY = rect.bottom + window.scrollY; // Bottom edge
-        const absoluteX = rect.left + window.scrollX;   // Left edge
+        const absoluteY = rect.bottom + window.scrollY;
+        const absoluteX = rect.left + window.scrollX;
         
-        // Find remainder to nearest grid line
         const offsetY = absoluteY % gridSize;
         const offsetX = absoluteX % gridSize;
         
-        // Shift it so it perfectly snaps to the global grid lines
         setOffset({
           x: -offsetX,
-          // If the section bottom is at 1005 (1005 % 35 = 25), we shift it UP by 25px (-25) to hit 980
           y: -offsetY
         });
       }
@@ -32,15 +29,41 @@ const CornerCluster = () => {
     return () => window.removeEventListener('resize', updateAlignment);
   }, []);
 
+  const boxes = useMemo(() => {
+    const arr = [];
+    for (let y = 0; y <= radius; y++) {
+      for (let x = 0; x <= radius; x++) {
+        // If distance from bottom-left corner (0,0) is within radius, fill it!
+        if (x * x + y * y <= radius * radius) {
+          arr.push(
+            <div
+              key={`${x}-${y}`}
+              className="cluster-solid-box"
+              style={{
+                width: gridSize,
+                height: gridSize,
+                bottom: y * gridSize,
+                left: x * gridSize,
+              }}
+            />
+          );
+        }
+      }
+    }
+    return arr;
+  }, []);
+
   return (
     <div 
       ref={containerRef}
       className="about-corner-cluster-wrapper"
     >
       <div 
-        className="about-corner-cluster"
+        className="about-corner-cluster-track"
         style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
-      ></div>
+      >
+        {boxes}
+      </div>
     </div>
   );
 };
