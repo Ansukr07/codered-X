@@ -1,5 +1,170 @@
-import React from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import './AboutSection.css';
+
+const CornerCluster = () => {
+  const containerRef = useRef(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const gridSize = 35;
+
+  useEffect(() => {
+    const updateAlignment = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const absoluteY = rect.bottom + window.scrollY;
+        
+        const offsetY = absoluteY % gridSize;
+        const shiftY = offsetY === 0 ? 0 : (gridSize - offsetY);
+        
+        setOffset({
+          x: 0, 
+          y: shiftY
+        });
+      }
+    };
+
+    updateAlignment();
+    window.addEventListener('resize', updateAlignment);
+    return () => window.removeEventListener('resize', updateAlignment);
+  }, []);
+
+  const boxes = useMemo(() => {
+    // Opacity matrix mirroring the user's exact uploaded image
+    // row 0 is bottom row, column 0 is far left
+    const opacities = [
+      /* y=0 */ [1.0, 1.0, 1.0, 0.7, 0.4, 0.2, 0.05],
+      /* y=1 */ [1.0, 0.7, 0.4, 0.2, 0.1, 0,    0],
+      /* y=2 */ [1.0, 0.4, 0.2, 0.1, 0,   0,    0],
+      /* y=3 */ [0.7, 0.2, 0.1, 0,   0,   0,    0],
+      /* y=4 */ [0.4, 0.1, 0,   0,   0,   0,    0],
+      /* y=5 */ [0.2, 0.05,0,   0,   0,   0,    0],
+      /* y=6 */ [0.1, 0,   0,   0,   0,   0,    0],
+      /* y=7 */ [0.05,0,   0,   0,   0,   0,    0],
+    ];
+
+    const arr = [];
+    for (let y = 0; y < opacities.length; y++) {
+      for (let x = 0; x < opacities[y].length; x++) {
+        const opacity = opacities[y][x];
+        if (opacity > 0) {
+          arr.push(
+            <div
+              key={`${x}-${y}`}
+              className="cluster-solid-box"
+              style={{
+                width: gridSize,
+                height: gridSize,
+                bottom: y * gridSize,
+                left: x * gridSize,
+                backgroundColor: `rgba(217, 10, 22, ${opacity})`
+              }}
+            />
+          );
+        }
+      }
+    }
+    return arr;
+  }, []);
+
+  return (
+    <div 
+      ref={containerRef}
+      className="about-corner-cluster-wrapper"
+    >
+      <div 
+        className="about-corner-cluster-track"
+        style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
+      >
+        {boxes}
+      </div>
+    </div>
+  );
+};
+
+const TopRightCluster = () => {
+  const containerRef = useRef(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const gridSize = 35;
+
+  useEffect(() => {
+    const updateAlignment = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        
+        const absoluteX = rect.right + window.scrollX;
+        const absoluteY = rect.top + window.scrollY;
+        
+        const offsetX = absoluteX % gridSize;
+        const offsetY = absoluteY % gridSize;
+        
+        // Shift RIGHT so the internal grid lines perfectly align, bleeding excess past the right edge
+        const shiftX = offsetX === 0 ? 0 : (gridSize - offsetX);
+        
+        // Shift UP to crop excess past the top edge
+        const shiftY = -offsetY;
+        
+        setOffset({
+          x: shiftX,
+          y: shiftY
+        });
+      }
+    };
+
+    updateAlignment();
+    window.addEventListener('resize', updateAlignment);
+    return () => window.removeEventListener('resize', updateAlignment);
+  }, []);
+
+  const boxes = useMemo(() => {
+    // Opacity matrix mirroring the L-shape
+    const opacities = [
+      [1.0, 1.0, 1.0, 0.7, 0.4, 0.2, 0.05],
+      [1.0, 0.7, 0.4, 0.2, 0.1, 0,    0],
+      [1.0, 0.4, 0.2, 0.1, 0,   0,    0],
+      [0.7, 0.2, 0.1, 0,   0,   0,    0],
+      [0.4, 0.1, 0,   0,   0,   0,    0],
+      [0.2, 0.05,0,   0,   0,   0,    0],
+      [0.1, 0,   0,   0,   0,   0,    0],
+      [0.05,0,   0,   0,   0,   0,    0],
+    ];
+
+    const arr = [];
+    for (let y = 0; y < opacities.length; y++) {
+      for (let x = 0; x < opacities[y].length; x++) {
+        const opacity = opacities[y][x];
+        if (opacity > 0) {
+          arr.push(
+            <div
+              key={`tr-${x}-${y}`}
+              className="cluster-solid-box"
+              style={{
+                width: gridSize,
+                height: gridSize,
+                top: y * gridSize,
+                right: x * gridSize,
+                backgroundColor: `rgba(217, 10, 22, ${opacity})`
+              }}
+            />
+          );
+        }
+      }
+    }
+    return arr;
+  }, []);
+
+  return (
+    <div 
+      ref={containerRef}
+      className="about-corner-cluster-top-right-wrapper"
+    >
+      <div 
+        className="about-corner-cluster-top-right-track"
+        style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
+      >
+        {boxes}
+      </div>
+    </div>
+  );
+};
 
 const GridSweep = () => {
   const gridSize = 35;
@@ -31,6 +196,8 @@ const GridSweep = () => {
 const AboutSection = () => {
   return (
     <section className="about-section">
+      <CornerCluster />
+      <TopRightCluster />
       <div className="about-content">
         
         <div className="about-left">

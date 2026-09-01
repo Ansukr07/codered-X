@@ -7,6 +7,56 @@
   display: flex;
   justify-content: center;
   min-height: 100vh;
+  margin-top: -140px;
+  margin-bottom: -70px;
+}
+
+/* Wrapper sits perfectly in the bottom left corner, shifted up 2 blocks */
+.about-corner-cluster-wrapper {
+  position: absolute;
+  bottom: 70px; /* 2 grid blocks (35px * 2) */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden; /* Prevent it from bleeding out of the section */
+}
+
+/* Inner track that receives the snap-to-grid offset */
+.about-corner-cluster-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Top Right Cluster Wrapper */
+.about-corner-cluster-top-right-wrapper {
+  position: absolute;
+  top: 140px; /* 4 grid blocks (35px * 4) */
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.about-corner-cluster-top-right-track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Individual solid red blocks that form the curve */
+.cluster-solid-box {
+  position: absolute;
+  /* Option: border to simulate grid lines */
+  box-sizing: border-box;
 }
 
 .about-content {
