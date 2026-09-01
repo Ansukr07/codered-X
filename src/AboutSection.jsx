@@ -1,5 +1,49 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import './AboutSection.css';
+
+const CornerCluster = () => {
+  const containerRef = useRef(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const gridSize = 35;
+
+  useEffect(() => {
+    const updateAlignment = () => {
+      if (containerRef.current) {
+        // Find the absolute position of the bottom-left corner of the container
+        const rect = containerRef.current.getBoundingClientRect();
+        const absoluteY = rect.bottom + window.scrollY; // Bottom edge
+        const absoluteX = rect.left + window.scrollX;   // Left edge
+        
+        // Find remainder to nearest grid line
+        const offsetY = absoluteY % gridSize;
+        const offsetX = absoluteX % gridSize;
+        
+        // Shift it so it perfectly snaps to the global grid lines
+        setOffset({
+          x: -offsetX,
+          // If the section bottom is at 1005 (1005 % 35 = 25), we shift it UP by 25px (-25) to hit 980
+          y: -offsetY
+        });
+      }
+    };
+
+    updateAlignment();
+    window.addEventListener('resize', updateAlignment);
+    return () => window.removeEventListener('resize', updateAlignment);
+  }, []);
+
+  return (
+    <div 
+      ref={containerRef}
+      className="about-corner-cluster-wrapper"
+    >
+      <div 
+        className="about-corner-cluster"
+        style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
+      ></div>
+    </div>
+  );
+};
 
 const GridSweep = () => {
   const gridSize = 35;
@@ -31,6 +75,7 @@ const GridSweep = () => {
 const AboutSection = () => {
   return (
     <section className="about-section">
+      <CornerCluster />
       <div className="about-content">
         
         <div className="about-left">

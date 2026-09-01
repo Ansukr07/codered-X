@@ -9,6 +9,105 @@
   min-height: 100vh;
 }
 
+/* Wrapper sits perfectly in the bottom left corner */
+.about-corner-cluster-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: var(--grid-size);
+  height: var(--grid-size);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* The actual cluster block */
+.about-corner-cluster {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: var(--grid-size);
+  height: var(--grid-size);
+  background-color: var(--accent-color);
+  
+  --s: var(--grid-size);
+  --s2: calc(var(--grid-size) * 2);
+  --s3: calc(var(--grid-size) * 3);
+  --s4: calc(var(--grid-size) * 4);
+  --s5: calc(var(--grid-size) * 5);
+  
+  --s6: calc(var(--grid-size) * 6);
+  --s7: calc(var(--grid-size) * 7);
+
+  --ns: calc(var(--grid-size) * -1);
+  --ns2: calc(var(--grid-size) * -2);
+  --ns3: calc(var(--grid-size) * -3);
+  --ns4: calc(var(--grid-size) * -4);
+  --ns5: calc(var(--grid-size) * -5);
+  --ns6: calc(var(--grid-size) * -6);
+  --ns7: calc(var(--grid-size) * -7);
+
+  /* A mathematically curved cluster radiating UP and RIGHT from the bottom-left corner */
+  box-shadow: 
+    /* D <= 2 (brightness 0.9) */
+    0 var(--ns) 0 0 rgba(217, 10, 22, 0.9),
+    var(--s) 0 0 0 rgba(217, 10, 22, 0.9),
+    var(--s) var(--ns) 0 0 rgba(217, 10, 22, 0.9),
+    0 var(--ns2) 0 0 rgba(217, 10, 22, 0.9),
+    var(--s2) 0 0 0 rgba(217, 10, 22, 0.9),
+    
+    /* D <= 3.5 (brightness 0.7) */
+    var(--s) var(--ns2) 0 0 rgba(217, 10, 22, 0.7),
+    var(--s2) var(--ns) 0 0 rgba(217, 10, 22, 0.7),
+    var(--s2) var(--ns2) 0 0 rgba(217, 10, 22, 0.7),
+    0 var(--ns3) 0 0 rgba(217, 10, 22, 0.7),
+    var(--s3) 0 0 0 rgba(217, 10, 22, 0.7),
+    var(--s) var(--ns3) 0 0 rgba(217, 10, 22, 0.7),
+    var(--s3) var(--ns) 0 0 rgba(217, 10, 22, 0.7),
+    
+    /* D <= 5 (brightness 0.5) */
+    var(--s2) var(--ns3) 0 0 rgba(217, 10, 22, 0.5),
+    var(--s3) var(--ns2) 0 0 rgba(217, 10, 22, 0.5),
+    0 var(--ns4) 0 0 rgba(217, 10, 22, 0.5),
+    var(--s4) 0 0 0 rgba(217, 10, 22, 0.5),
+    var(--s) var(--ns4) 0 0 rgba(217, 10, 22, 0.5),
+    var(--s4) var(--ns) 0 0 rgba(217, 10, 22, 0.5),
+    var(--s3) var(--ns3) 0 0 rgba(217, 10, 22, 0.5),
+    var(--s2) var(--ns4) 0 0 rgba(217, 10, 22, 0.5),
+    var(--s4) var(--ns2) 0 0 rgba(217, 10, 22, 0.5),
+    0 var(--ns5) 0 0 rgba(217, 10, 22, 0.5),
+    var(--s5) 0 0 0 rgba(217, 10, 22, 0.5),
+    var(--s3) var(--ns4) 0 0 rgba(217, 10, 22, 0.5),
+    var(--s4) var(--ns3) 0 0 rgba(217, 10, 22, 0.5),
+
+    /* D <= 6.5 (brightness 0.3) */
+    var(--s) var(--ns5) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s5) var(--ns) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s2) var(--ns5) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s5) var(--ns2) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s4) var(--ns4) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s3) var(--ns5) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s5) var(--ns3) 0 0 rgba(217, 10, 22, 0.3),
+    0 var(--ns6) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s6) 0 0 0 rgba(217, 10, 22, 0.3),
+    var(--s) var(--ns6) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s6) var(--ns) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s2) var(--ns6) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s6) var(--ns2) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s4) var(--ns5) 0 0 rgba(217, 10, 22, 0.3),
+    var(--s5) var(--ns4) 0 0 rgba(217, 10, 22, 0.3),
+
+    /* D <= 7.5 (brightness 0.1) */
+    var(--s3) var(--ns6) 0 0 rgba(217, 10, 22, 0.1),
+    var(--s6) var(--ns3) 0 0 rgba(217, 10, 22, 0.1),
+    0 var(--ns7) 0 0 rgba(217, 10, 22, 0.1),
+    var(--s7) 0 0 0 rgba(217, 10, 22, 0.1),
+    var(--s5) var(--ns5) 0 0 rgba(217, 10, 22, 0.1),
+    var(--s) var(--ns7) 0 0 rgba(217, 10, 22, 0.1),
+    var(--s7) var(--ns) 0 0 rgba(217, 10, 22, 0.1),
+    var(--s4) var(--ns6) 0 0 rgba(217, 10, 22, 0.1),
+    var(--s6) var(--ns4) 0 0 rgba(217, 10, 22, 0.1);
+}
+
 .about-content {
   max-width: 1300px;
   width: 100%;
@@ -131,12 +230,26 @@
 }
 
 .rhombus-content {
-  padding: 24px 32px; /* Reduced vertical padding */
+  padding: 24px 32px; 
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  /* height removed so it scales to content size */
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-body p {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  letter-spacing: 0.5px;
 }
 
 .card-row:has(.card-outside-title:hover, .about-card-rhombus:hover) .about-card-rhombus {
