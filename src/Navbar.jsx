@@ -18,9 +18,9 @@ const Navbar = () => {
         
         <div className="nav-title">CODERED <span style={{color: '#D90A16'}}>4.0</span></div>
         
-        <button className="nav-toggle" onClick={toggleMenu}>
-          <div className="toggle-line"></div>
-          {!isOpen && <div className="toggle-line"></div>}
+        <button className={`nav-toggle ${isOpen ? 'open' : ''}`} onClick={toggleMenu}>
+          <div className="toggle-line line-1"></div>
+          <div className="toggle-line line-2"></div>
         </button>
       </div>
 
