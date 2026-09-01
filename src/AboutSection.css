@@ -10,29 +10,41 @@
 }
 
 .about-content {
-  max-width: 1200px;
+  max-width: 1300px;
   width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.about-left {
+  flex: 1;
+  text-align: left;
+}
+
+.about-right {
+  flex: 1.5;
 }
 
 .about-header-container {
-  text-align: center;
-  margin-bottom: 24px;
+  text-align: left;
+  margin-bottom: 40px; /* Decreased gap */
 }
 
 .heading-group {
   position: relative;
   display: inline-block;
-  text-align: center;
+  text-align: left;
   margin-top: 40px; 
 }
 
 .heading-cursive {
   font-family: 'Caveat', cursive;
-  font-size: 56px;
+  font-size: 72px;
   color: var(--accent-color, #D90A16);
   position: absolute;
-  top: -45px;
-  left: -40px;
+  top: -50px;
+  left: -30px;
   transform: rotate(-10deg);
   z-index: 2;
   white-space: nowrap;
@@ -40,14 +52,15 @@
 
 .about-heading {
   font-family: 'Inter', sans-serif;
-  font-size: 64px;
+  font-size: 80px;
   font-weight: 800;
   color: #fff;
   margin: 0;
-  letter-spacing: -2px;
+  letter-spacing: -2.5px;
   text-transform: uppercase;
   position: relative;
   z-index: 1;
+  white-space: nowrap;
 }
 
 .about-description {
@@ -56,27 +69,47 @@
   font-weight: 400;
   line-height: 1.6;
   color: #b0b0b0;
-  margin: 0 auto 80px auto;
-  max-width: 900px;
-  text-align: center;
+  margin: 0 0 48px 0; /* Decreased gap */
+  text-align: left;
+}
+
+.about-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Decreased gap */
+}
+
+.detail-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.detail-label {
+  font-weight: 700;
+  color: var(--accent-color, #D90A16);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 16px;
 }
 
 .about-cards-container {
   display: flex;
-  gap: 32px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 64px;
+  flex-direction: column;
+  gap: 40px; /* Increased vertical gap between cards */
+  align-items: flex-end;
+  transform: skewX(-8deg); /* Skew the entire column so edges align perfectly */
 }
 
 .about-card-rhombus {
-  flex: 1;
-  min-width: 280px;
-  max-width: 350px;
+  width: 100%;
+  max-width: 320px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   background-color: #0a0a0a; 
-  box-shadow: 4px 4px 0 var(--accent-color, #D90A16); /* Solid red but very tight offset */
-  transform: skewX(-8deg); 
+  box-shadow: 4px 4px 0 var(--accent-color, #D90A16);
   position: relative;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease 0s;
@@ -98,42 +131,47 @@
 }
 
 .rhombus-content {
-  padding: 40px 32px;
+  padding: 24px 32px; /* Reduced vertical padding */
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* height removed so it scales to content size */
 }
 
-.about-card-rhombus:hover {
+.card-row:has(.card-outside-title:hover, .about-card-rhombus:hover) .about-card-rhombus {
   border-color: var(--accent-color, #D90A16);
   background-color: var(--accent-color, #D90A16); 
-  transform: skewX(-8deg) translate(-2px, -2px); /* Lift card slightly */
+  transform: translate(-4px, -4px); /* Lift card slightly without skew */
   box-shadow: 6px 6px 0 #fff; /* Solid white but very tight offset */
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease 0.6s;
 }
 
-.card-header {
+.card-row {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 32px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 48px; /* Increased gap between title and card */
+  width: 100%;
 }
 
-.card-header h3 {
-  font-family: 'Inter', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
+.card-outside-title {
+  font-family: 'Caveat', cursive;
+  font-size: 48px;
   color: var(--accent-color, #D90A16);
   margin: 0;
-  letter-spacing: 1px;
+  width: 140px; /* Fixed width to align them */
+  text-align: right;
   transition: color 0.3s ease;
 }
 
-.about-card-rhombus:hover .card-header h3 {
+.card-row:has(.card-outside-title:hover, .about-card-rhombus:hover) .card-outside-title {
   color: #fff;
-  transition: color 0.3s ease;
+}
+
+.card-row:has(.card-outside-title:hover, .about-card-rhombus:hover) .about-card-rhombus::before {
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .card-grid-bg {
@@ -152,7 +190,7 @@
   transition: background-color 0.1s ease;
 }
 
-.about-card-rhombus:hover .grid-block {
+.card-row:has(.card-outside-title:hover, .about-card-rhombus:hover) .grid-block {
   background-color: var(--accent-color, #D90A16);
 }
 
@@ -169,14 +207,32 @@
 }
 
 @media (max-width: 1024px) {
-  .about-cards-container {
+  .about-content {
     flex-direction: column;
+    gap: 48px;
+  }
+  
+  .about-left, .about-header-container, .heading-group, .about-description {
+    text-align: center !important;
+  }
+  
+  .about-details-list {
     align-items: center;
   }
   
+  .heading-cursive {
+    left: -10px;
+  }
+  
+  .about-cards-container {
+    flex-direction: column;
+    align-items: center;
+    transform: skewX(0deg); /* Remove skew on mobile */
+  }
+  
   .about-card-rhombus {
-    transform: skewX(0deg); 
     width: 100%;
+    margin-left: 0 !important;
   }
 
   .about-card-rhombus:hover {
@@ -184,13 +240,14 @@
   }
 
   .about-heading {
-    font-size: 42px;
+    font-size: 48px;
+    white-space: normal;
   }
   
   .heading-cursive {
-    font-size: 40px;
-    top: -30px;
-    left: -20px;
+    font-size: 48px;
+    top: -35px;
+    left: -15px;
   }
   
   .about-description {

@@ -16,7 +16,7 @@ const Navbar = () => {
           <img src={logoImage} alt="CODERED Logo" className="nav-logo-img" />
         </div>
         
-        <div className="nav-title">CODERED 4.0</div>
+        <div className="nav-title">CODERED <span style={{color: '#D90A16'}}>4.0</span></div>
         
         <button className="nav-toggle" onClick={toggleMenu}>
           <div className="toggle-line"></div>

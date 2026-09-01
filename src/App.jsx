@@ -122,7 +122,7 @@ function App() {
         {/* ── LEFT COLUMN ──────────────────────────────────────────────── */}
         <div className="hero-left">
           <div className="logo-container">
-            <h1 className="logo">CODERED 4.0</h1>
+            <h1 className="logo">CODERED <span style={{color: '#D90A16'}}>4.0</span></h1>
           </div>
 
           <div className="left-labels">
