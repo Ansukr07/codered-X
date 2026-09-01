@@ -1,72 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import './AboutSection.css';
-
-const CornerCluster = () => {
-  const containerRef = useRef(null);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const gridSize = 35;
-  const radius = 12; // 12 boxes = 420px radius
-
-  useEffect(() => {
-    const updateAlignment = () => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const absoluteY = rect.bottom + window.scrollY;
-        const absoluteX = rect.left + window.scrollX;
-        
-        const offsetY = absoluteY % gridSize;
-        const offsetX = absoluteX % gridSize;
-        
-        setOffset({
-          x: -offsetX,
-          y: -offsetY
-        });
-      }
-    };
-
-    updateAlignment();
-    window.addEventListener('resize', updateAlignment);
-    return () => window.removeEventListener('resize', updateAlignment);
-  }, []);
-
-  const boxes = useMemo(() => {
-    const arr = [];
-    for (let y = 0; y <= radius; y++) {
-      for (let x = 0; x <= radius; x++) {
-        // If distance from bottom-left corner (0,0) is within radius, fill it!
-        if (x * x + y * y <= radius * radius) {
-          arr.push(
-            <div
-              key={`${x}-${y}`}
-              className="cluster-solid-box"
-              style={{
-                width: gridSize,
-                height: gridSize,
-                bottom: y * gridSize,
-                left: x * gridSize,
-              }}
-            />
-          );
-        }
-      }
-    }
-    return arr;
-  }, []);
-
-  return (
-    <div 
-      ref={containerRef}
-      className="about-corner-cluster-wrapper"
-    >
-      <div 
-        className="about-corner-cluster-track"
-        style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
-      >
-        {boxes}
-      </div>
-    </div>
-  );
-};
 
 const GridSweep = () => {
   const gridSize = 35;
@@ -98,7 +31,6 @@ const GridSweep = () => {
 const AboutSection = () => {
   return (
     <section className="about-section">
-      <CornerCluster />
       <div className="about-content">
         
         <div className="about-left">
