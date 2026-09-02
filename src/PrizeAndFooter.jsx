@@ -8,7 +8,7 @@ export default function PrizeAndFooter() {
   return (
     <>
         {/*  Prize Pool Section (Updated to ₹60k Total: 1st 30k, 2nd 20k, 3rd 10k)  */}
-  <div id="prizes-wrapper" style={{"backgroundColor":"#FF3333","width":"100%","position":"relative","paddingBottom":"60px"}}>
+  <div id="prizes-wrapper" style={{"backgroundColor":"#D90A16","width":"100%","position":"relative","paddingBottom":"60px"}}>
   <section id="prizes" className="section-wrapper" style={{ position: 'relative', zIndex: 2 }}>
     <div className="tracks__header" style={{"marginBottom":"48px"}}>
       <div className="bitmela-eyebrow">
@@ -156,7 +156,7 @@ export default function PrizeAndFooter() {
       </div>
       <h2 style={{"margin":"0","fontFamily":"'Bricolage Grotesque', sans-serif","fontWeight":"800","fontSize":"clamp(2rem, 6vw, 56px)","lineHeight":"1.02","letterSpacing":"-0.015em"}}>
         What happens when<br />
-        <span style={{"fontFamily":"'Press Start 2P', monospace","fontSize":"0.7em","color":"var(--minion-yellow)","letterSpacing":"-0.02em","verticalAlign":"baseline"}}>HARDWARE</span> meets <em style={{"fontFamily":"'Newsreader', serif","fontWeight":"600","color":"#FF3333"}}>Software?</em>
+        <span style={{"fontFamily":"'Press Start 2P', monospace","fontSize":"0.7em","color":"var(--minion-yellow)","letterSpacing":"-0.02em","verticalAlign":"baseline"}}>HARDWARE</span> meets <em style={{"fontFamily":"'Newsreader', serif","fontWeight":"600","color":"#D90A16"}}>Software?</em>
       </h2>
       <div style={{"fontFamily":"'Newsreader', serif","fontSize":"20px","lineHeight":"1.5","maxWidth":"520px","color":"#ffffff"}}>
         Builder, student, founder, or just curious — doesn't matter. Sign up, pull up, get in the game.

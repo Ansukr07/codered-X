@@ -10,7 +10,7 @@ export default function BinaryTerrain() {
     const ctx = canvas.getContext('2d');
     
     const cellColor = '#05080B'; 
-    const bgColor = '#FF3333'; 
+    const bgColor = '#D90A16'; 
     const numColor = 'rgba(23,21,30,0.55)'; 
     const invert = true; 
     const seedOff = 2; 
