@@ -86,7 +86,7 @@ section[id] {
   background-color: rgba(136, 136, 136, 0.8);
 }
 
-body {
+#prizes-wrapper {
   font-family: var(--font-sans);
   background-color: #FBF8F3;
   color: var(--text-main);
