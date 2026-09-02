@@ -42,7 +42,7 @@ body {
   left: 0;
   background-color: var(--accent-color);
   pointer-events: none;
-  z-index: 9999;
+  z-index: 0;
   /* Add smooth transform transition and opacity fade */
   transition: opacity 0.45s ease-out, transform 0.05s linear; 
   
