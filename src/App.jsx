@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import './App.css';
 import Tunnel from './Tunnel';
 import Navbar from './Navbar';
+import PrizeAndFooter from './PrizeAndFooter';
 
 import AboutSection from './AboutSection';
 import TimelineSection from './TimelineSection';
@@ -158,6 +159,8 @@ function App() {
 
       {/* ── Timeline Section ──────────────────────────────────────────── */}
       <TimelineSection />
+
+      <PrizeAndFooter />
 
       {/* Fixed link icon */}
       <div className="bottom-left-icon">

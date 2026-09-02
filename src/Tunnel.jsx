@@ -15,7 +15,7 @@ const PALETTE = [
   '#FF6600', // Orange
   '#00B33C', // Green
   '#9933FF', // Purple
-  '#FF3333', // Red
+  '#D90A16', // Red
   '#FFCC00', // Yellow
 ];
 const EMPTY_COLOR = '#f5ede4';
