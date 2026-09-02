@@ -2,6 +2,10 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import './App.css';
 import Tunnel from './Tunnel';
 import PrizeAndFooter from './PrizeAndFooter';
+import Navbar from './Navbar';
+
+import AboutSection from './AboutSection';
+import TimelineSection from './TimelineSection';
 
 function App() {
   const [trail, setTrail] = useState([]);
@@ -10,8 +14,7 @@ function App() {
   const lastMousePos = useRef({ x: 0, y: 0 });
 
   const addTrailPoint = useCallback((x, y, colorClass = '') => {
-    const newPoint = { x, y, id: Date.now() + Math.random(), alpha: 0.8, colorClass };
-
+    const newPoint = { x, y, id: Date.now() + Math.random(), createdAt: Date.now(), colorClass };
     if (trailRef.current.length > 0) {
       const last = trailRef.current[trailRef.current.length - 1];
       if (last.x === x && last.y === y) return;
@@ -22,46 +25,92 @@ function App() {
       trailRef.current = trailRef.current.slice(trailRef.current.length - 15);
     }
     setTrail([...trailRef.current]);
-
-    setTimeout(() => {
-      trailRef.current = trailRef.current.filter(p => p.id !== newPoint.id);
-      setTrail([...trailRef.current]);
-    }, 450);
   }, []);
+
+  useEffect(() => {
+    // Continuously fade out old trail points, but NEVER remove the most recent one
+    const interval = setInterval(() => {
+      const now = Date.now();
+      let changed = false;
+      
+      const newTrail = trailRef.current.filter((p, index) => {
+        if (index === trailRef.current.length - 1) return true; // Always keep the head!
+        if (now - p.createdAt > 450) {
+          changed = true;
+          return false;
+        }
+        return true;
+      });
+
+      if (changed) {
+        trailRef.current = newTrail;
+        setTrail([...trailRef.current]);
+      }
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  const targetPos = useRef({ x: 0, y: 0 });
+  const currentPos = useRef({ x: 0, y: 0 });
+  const isFirstMove = useRef(true);
+
+  // Smoothly interpolate the cursor trail towards the actual mouse position
+  useEffect(() => {
+    let animationFrameId;
+    const loop = () => {
+      if (!isFirstMove.current) {
+        // Lerp factor (lower = more lag/spring, higher = tighter)
+        currentPos.current.x += (targetPos.current.x - currentPos.current.x) * 0.2;
+        currentPos.current.y += (targetPos.current.y - currentPos.current.y) * 0.2;
+        
+        const snappedX = Math.floor(currentPos.current.x / gridSize) * gridSize;
+        const snappedY = Math.floor(currentPos.current.y / gridSize) * gridSize;
+        addTrailPoint(snappedX, snappedY, window.currentColorClass || '');
+      }
+      animationFrameId = requestAnimationFrame(loop);
+    };
+    loop();
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [addTrailPoint, gridSize]);
 
   const handleMouseMove = (e) => {
     lastMousePos.current = { x: e.clientX, y: e.clientY };
-    const snappedX = Math.floor(e.pageX / gridSize) * gridSize;
-    const snappedY = Math.floor(e.pageY / gridSize) * gridSize;
+    targetPos.current = { x: e.pageX, y: e.pageY };
     
     let colorClass = '';
     if (e.target && e.target.closest && e.target.closest('#prizes-wrapper')) {
       colorClass = 'cursor-trail-white';
     }
     
-    addTrailPoint(snappedX, snappedY, colorClass);
+    // Pass color class to a ref if we need it in the loop, but wait...
+    // The loop currently calls addTrailPoint(snappedX, snappedY) without color class.
+    // I can modify the loop to pass it, but for now let's just create a current color class ref.
+    if (!window.currentColorClass) window.currentColorClass = '';
+    window.currentColorClass = colorClass;
+    
+    // Snap immediately on the very first mouse move so it doesn't fly in from 0,0
+    if (isFirstMove.current) {
+      currentPos.current = { x: e.pageX, y: e.pageY };
+      isFirstMove.current = false;
+    }
   };
 
   useEffect(() => {
     const handleScroll = () => {
       const pageX = lastMousePos.current.x + window.scrollX;
       const pageY = lastMousePos.current.y + window.scrollY;
+      targetPos.current = { x: pageX, y: pageY };
       
       let colorClass = '';
       const el = document.elementFromPoint(lastMousePos.current.x, lastMousePos.current.y);
       if (el && el.closest && el.closest('#prizes-wrapper')) {
         colorClass = 'cursor-trail-white';
       }
-      
-      addTrailPoint(
-        Math.floor(pageX / gridSize) * gridSize,
-        Math.floor(pageY / gridSize) * gridSize,
-        colorClass
-      );
+      window.currentColorClass = colorClass;
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [addTrailPoint, gridSize]);
+  }, []);
 
   return (
     <div className="app-container" onMouseMove={handleMouseMove}>
@@ -75,17 +124,13 @@ function App() {
             transform: `translate(${point.x}px, ${point.y}px)`,
             width: gridSize,
             height: gridSize,
-            opacity: index === trail.length - 1 ? 0.8 : (index / trail.length) * 0.45,
+            opacity: index === trail.length - 1 ? 0.4 : (index / trail.length) * 0.25,
           }}
         />
       ))}
 
       {/* ── Top nav ────────────────────────────────────────────────────────── */}
-      <nav className="top-nav" style={{ position: 'relative', zIndex: 2 }}>
-        <div>MENU</div>
-        <div>LIGHT</div>
-        <div>CONTACTS</div>
-      </nav>
+      <Navbar />
 
       {/* ── Hero: two-column layout ─────────────────────────────────────────
            Left  ~45%  → existing content (logo, labels, accent box)
@@ -95,7 +140,7 @@ function App() {
         {/* ── LEFT COLUMN ──────────────────────────────────────────────── */}
         <div className="hero-left">
           <div className="logo-container">
-            <h1 className="logo">CODERED 4.0</h1>
+            <h1 className="logo">CODERED <span style={{color: '#D90A16'}}>4.0</span></h1>
           </div>
 
           <div className="left-labels">
@@ -121,10 +166,16 @@ function App() {
 
         {/*  RIGHT COLUMN — tunnel canvas  */}
         <div className="hero-right">
-          <Tunnel />
+          
         </div>
 
       </main>
+
+      {/* ── About Section ─────────────────────────────────────────────── */}
+      <AboutSection />
+
+      {/* ── Timeline Section ──────────────────────────────────────────── */}
+      <TimelineSection />
 
       <PrizeAndFooter />
 

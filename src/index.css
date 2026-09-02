@@ -3,12 +3,9 @@
 
 :root {
   --grid-size: 35px;
-  --bg-color: #0a0a0a;
-  /* Dark background */
-  --grid-color: rgba(255, 255, 255, 0.1);
-  /* White transparent grids */
-  --accent-color: #FF3333;
-  /* Reddish highlight */
+  --bg-color: #0a0a0a; /* Dark background */
+  --grid-color: rgba(255, 255, 255, 0.1); /* White transparent grids */
+  --accent-color: #FF3333; /* Reddish highlight */
   --text-light: #e0e0e0;
   --text-dark: #0a0a0a;
   /* For text inside the accent box */

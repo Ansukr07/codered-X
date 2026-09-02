@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+
+.about-section {
+  padding: 80px 40px;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  margin-top: -140px;
+  margin-bottom: -70px;
+}
+
+/* Wrapper sits perfectly in the bottom left corner, shifted up 2 blocks */
+.about-corner-cluster-wrapper {
+  position: absolute;
+  bottom: 70px; /* 2 grid blocks (35px * 2) */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden; /* Prevent it from bleeding out of the section */
+}
+
+/* Inner track that receives the snap-to-grid offset */
+.about-corner-cluster-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Top Right Cluster Wrapper */
+.about-corner-cluster-top-right-wrapper {
+  position: absolute;
+  top: 140px; /* 4 grid blocks (35px * 4) */
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.about-corner-cluster-top-right-track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Individual solid red blocks that form the curve */
+.cluster-solid-box {
+  position: absolute;
+  /* Option: border to simulate grid lines */
+  box-sizing: border-box;
+}
+
+.about-content {
+  max-width: 1300px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.about-left {
+  flex: 1;
+  text-align: left;
+}
+
+.about-right {
+  flex: 1.5;
+}
+
+.about-header-container {
+  text-align: left;
+  margin-bottom: 40px; /* Decreased gap */
+}
+
+.heading-group {
+  position: relative;
+  display: inline-block;
+  text-align: left;
+  margin-top: 40px; 
+}
+
+.heading-cursive {
+  font-family: 'Caveat', cursive;
+  font-size: 72px;
+  color: var(--accent-color, #D90A16);
+  position: absolute;
+  top: -50px;
+  left: -30px;
+  transform: rotate(-10deg);
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.about-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -2.5px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.about-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #b0b0b0;
+  margin: 0 0 48px 0; /* Decreased gap */
+  text-align: left;
+}
+
+.about-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Decreased gap */
+}
+
+.detail-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.detail-label {
+  font-weight: 700;
+  color: var(--accent-color, #D90A16);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 16px;
+}
+
+.about-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* Increased vertical gap between cards */
+  align-items: flex-end;
+  transform: skewX(-8deg); /* Skew the entire column so edges align perfectly */
+}
+
+.about-card-rhombus {
+  width: 100%;
+  max-width: 320px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: #0a0a0a; 
+  box-shadow: 4px 4px 0 var(--accent-color, #D90A16);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease 0s;
+}
+
+.about-card-rhombus::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.rhombus-content {
+  padding: 24px 32px; 
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-body p {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.card-row:has(.card-outside-title:hover, .about-card-rhombus:hover) .about-card-rhombus {
+  border-color: var(--accent-color, #D90A16);
+  background-color: var(--accent-color, #D90A16); 
+  transform: translate(-4px, -4px); /* Lift card slightly without skew */
+  box-shadow: 6px 6px 0 #fff; /* Solid white but very tight offset */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease 0.6s;
+}
+
+.card-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 48px; /* Increased gap between title and card */
+  width: 100%;
+}
+
+.card-outside-title {
+  font-family: 'Caveat', cursive;
+  font-size: 48px;
+  color: var(--accent-color, #D90A16);
+  margin: 0;
+  width: 140px; /* Fixed width to align them */
+  text-align: right;
+  transition: color 0.3s ease;
+}
+
+.card-row:has(.card-outside-title:hover, .about-card-rhombus:hover) .card-outside-title {
+  color: #fff;
+}
+
+.card-row:has(.card-outside-title:hover, .about-card-rhombus:hover) .about-card-rhombus::before {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-grid-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.grid-block {
+  position: absolute;
+  background-color: transparent;
+  transition: background-color 0.1s ease;
+}
+
+.card-row:has(.card-outside-title:hover, .about-card-rhombus:hover) .grid-block {
+  background-color: var(--accent-color, #D90A16);
+}
+
+.card-body p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #fff;
+  margin: 0 0 16px 0;
+  line-height: 1.6;
+}
+
+.card-body p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  .about-content {
+    flex-direction: column;
+    gap: 48px;
+  }
+  
+  .about-left, .about-header-container, .heading-group, .about-description {
+    text-align: center !important;
+  }
+  
+  .about-details-list {
+    align-items: center;
+  }
+  
+  .heading-cursive {
+    left: -10px;
+  }
+  
+  .about-cards-container {
+    flex-direction: column;
+    align-items: center;
+    transform: skewX(0deg); /* Remove skew on mobile */
+  }
+  
+  .about-card-rhombus {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+
+  .about-card-rhombus:hover {
+    transform: translate(-4px, -4px); 
+  }
+
+  .about-heading {
+    font-size: 48px;
+    white-space: normal;
+  }
+  
+  .heading-cursive {
+    font-size: 48px;
+    top: -35px;
+    left: -15px;
+  }
+  
+  .about-description {
+    font-size: 16px;
+    margin-bottom: 48px;
+  }
+}
